@@ -1,0 +1,2 @@
+include ':app', ':padraoarquiteturavalormvvm'
+rootProject.name='webservices'
