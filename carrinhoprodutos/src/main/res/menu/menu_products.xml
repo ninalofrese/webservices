@@ -4,11 +4,10 @@
     tools:context="com.example.carrinhoprodutos.view.ProdutosActivity">
 
     <item
-        android:id="@+id/menuShow"
+        android:id="@+id/menu_add_cart"
         android:checkable="true"
         android:title="@string/adicionar_ao_carrinho"
         android:icon="@drawable/ic_add_shopping_cart"
-        app:actionViewClass="android.widget.CheckBox"
         app:showAsAction="ifRoom|withText" />
 
 </menu>
