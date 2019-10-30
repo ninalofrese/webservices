@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import com.example.apifilmes.R;
 import com.example.apifilmes.model.Filme;
 import com.example.apifilmes.view.adapter.FilmesRetrofitAdapter;
-import com.example.apifilmes.viewmodel.FIlmeViewModel;
+import com.example.apifilmes.viewmodel.FilmeViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class FilmesRetrofitActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private List<Filme> listaFilmes = new ArrayList<>();
     private FilmesRetrofitAdapter adapter;
-    private FIlmeViewModel viewModel;
+    private FilmeViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class FilmesRetrofitActivity extends AppCompatActivity {
     public void initViews() {
         recyclerView = findViewById(R.id.recyclerViewFilmes);
         progressBar = findViewById(R.id.progress_bar);
-        viewModel = ViewModelProviders.of(this).get(FIlmeViewModel.class);
         adapter = new FilmesRetrofitAdapter(listaFilmes);
+        viewModel = ViewModelProviders.of(this).get(FilmeViewModel.class);
     }
 }

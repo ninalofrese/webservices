@@ -17,13 +17,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class FIlmeViewModel extends AndroidViewModel {
+public class FilmeViewModel extends AndroidViewModel {
     private MutableLiveData<List<Filme>> listaFilme = new MutableLiveData<>();
     private MutableLiveData<Boolean> loading = new MutableLiveData<>();
     private CompositeDisposable disposable = new CompositeDisposable();
     private FilmeRepository repository = new FilmeRepository();
 
-    public FIlmeViewModel(@NonNull Application application) {
+    public FilmeViewModel(@NonNull Application application) {
         super(application);
     }
 
@@ -42,10 +42,10 @@ public class FIlmeViewModel extends AndroidViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(disposable1 -> loading.setValue(true))
                         .doOnTerminate(() -> loading.setValue(false))
-                        .subscribe(filmeResult -> {
-                            listaFilme.setValue(filmeResult.getFilmes());
-                        }, throwable -> {
-                            Log.wtf("LOGJ", "erro" + throwable.getMessage());
+                        .subscribe(filmeResult ->
+                            listaFilme.setValue(filmeResult.getFilmes())
+                        , throwable -> {
+                            Log.wtf("LOGJ", "erro " + throwable.getMessage());
                         })
         );
     }

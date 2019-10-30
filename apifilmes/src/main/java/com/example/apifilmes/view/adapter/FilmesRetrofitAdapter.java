@@ -1,6 +1,5 @@
 package com.example.apifilmes.view.adapter;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +16,10 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class FilmesRetrofitAdapter extends RecyclerView.Adapter<FilmesRetrofitAdapter.ViewHolder> {
-    private List<Filme> listaFilme;
+    private List<Filme> filmeList;
 
-    public FilmesRetrofitAdapter(List<Filme> listaFilme) {
-        this.listaFilme = listaFilme;
+    public FilmesRetrofitAdapter(List<Filme> filmeList) {
+        this.filmeList = filmeList;
     }
 
     @NonNull
@@ -32,18 +31,19 @@ public class FilmesRetrofitAdapter extends RecyclerView.Adapter<FilmesRetrofitAd
 
     @Override
     public void onBindViewHolder(@NonNull FilmesRetrofitAdapter.ViewHolder holder, int position) {
-        Filme filme = listaFilme.get(position);
+        Filme filme = filmeList.get(position);
         holder.onBind(filme);
     }
 
     @Override
     public int getItemCount() {
-        return listaFilme.size();
+        return filmeList == null ? 0 : filmeList.size();
+        //return filmeList.size();
     }
 
     public void atualizaLista(List<Filme> novaLista) {
-        this.listaFilme.clear();
-        this.listaFilme = novaLista;
+        this.filmeList.clear();
+        this.filmeList = novaLista;
         notifyDataSetChanged();
     }
 

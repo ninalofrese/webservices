@@ -13,6 +13,7 @@ public class FilmeResult {
     @Expose
     private Long page;
     @Expose
+    @SerializedName("results")
     private List<Filme> filmes;
     @SerializedName("total_pages")
     private Long totalPages;
