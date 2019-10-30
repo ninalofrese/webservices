@@ -12,6 +12,7 @@ public class FilmeResult {
     private Dates dates;
     @Expose
     private Long page;
+    //muda o nome entendido pela API, porque ela usa "results" e não "filmes"
     @Expose
     @SerializedName("results")
     private List<Filme> filmes;
