@@ -1,10 +1,10 @@
 package com.example.carrinhoprodutos.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.carrinhoprodutos.R;
 import com.example.carrinhoprodutos.model.Produto;
@@ -29,15 +29,24 @@ public class NovoProdutoActivity extends AppCompatActivity {
 
         initViews();
 
-        if (getIntent().hasExtra(PRODUTO)) {
-            setTitle("Editar Produto");
+        inputNome.requestFocus();
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        if (getIntent() != null && getIntent().getExtras() != null) {
             produto = getIntent().getExtras().getParcelable(PRODUTO);
+            //long id = getIntent().getExtras().getLong(PROD_ID);
+            //produto = viewModel.buscarPorId(id);
 
             if (produto != null) {
+
                 inputNome.getEditText().setText(produto.getNome());
                 inputPreco.getEditText().setText(produto.getPreco().toString());
             }
+
+            setTitle("Editar Produto");
 
         } else {
             setTitle("Novo Produto");
@@ -84,5 +93,11 @@ public class NovoProdutoActivity extends AppCompatActivity {
         buttonOK = findViewById(R.id.button_produto_ok);
         buttonCancel = findViewById(R.id.button_produto_cancel);
         viewModel = ViewModelProviders.of(this).get(NovoProdutoActivityViewModel.class);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

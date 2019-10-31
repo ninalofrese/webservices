@@ -1,15 +1,34 @@
 package com.example.carrinhoprodutos.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
-public class Carrinho {
+public class Carrinho implements Parcelable {
     private long id;
     private List<Produto> produtosCarrinho;
 
-    public Carrinho(long id, List<Produto> produtosCarrinho) {
-        this.id = id;
+    public Carrinho(List<Produto> produtosCarrinho) {
         this.produtosCarrinho = produtosCarrinho;
     }
+
+    protected Carrinho(Parcel in) {
+        id = in.readLong();
+        produtosCarrinho = in.createTypedArrayList(Produto.CREATOR);
+    }
+
+    public static final Creator<Carrinho> CREATOR = new Creator<Carrinho>() {
+        @Override
+        public Carrinho createFromParcel(Parcel in) {
+            return new Carrinho(in);
+        }
+
+        @Override
+        public Carrinho[] newArray(int size) {
+            return new Carrinho[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -25,5 +44,16 @@ public class Carrinho {
 
     public void setProdutosCarrinho(List<Produto> produtosCarrinho) {
         this.produtosCarrinho = produtosCarrinho;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeTypedList(produtosCarrinho);
     }
 }

@@ -6,7 +6,6 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.example.carrinhoprodutos.model.Carrinho;
 import com.example.carrinhoprodutos.model.Produto;
 
 import java.util.List;
@@ -27,9 +26,6 @@ public interface ProdutoDao {
 
     @Query("SELECT * FROM produtos")
     Observable<List<Produto>> getAllProdutos();
-
-//    @Query("SELECT * FROM carrinho")
-//    Observable<Carrinho> getAllCarrinho();
 
     @Query("SELECT * FROM produtos WHERE id == :id")
     Produto getById(long id);

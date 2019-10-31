@@ -31,6 +31,12 @@ public class ProdutosActivityViewModel extends AndroidViewModel {
         return listaProdutos;
     }
 
+    public void deleteItem(Produto produto) {
+        new Thread(() -> {
+            produtoDao.deleteProduto(produto);
+        }).start();
+    }
+
     public void listarProdutos() {
         disposable.add(
                 produtoDao.getAllProdutos()

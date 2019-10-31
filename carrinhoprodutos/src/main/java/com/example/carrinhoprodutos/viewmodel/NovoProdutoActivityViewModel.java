@@ -14,6 +14,7 @@ import com.example.carrinhoprodutos.repository.data.ProdutoDao;
 public class NovoProdutoActivityViewModel extends AndroidViewModel {
     private MutableLiveData<Produto> produto = new MutableLiveData<>();
     private ProdutoDao produtoDao = Database.getDatabase(getApplication()).produtoDao();
+    private Produto encontrado;
 
     public NovoProdutoActivityViewModel(@NonNull Application application) {
         super(application);
@@ -32,6 +33,15 @@ public class NovoProdutoActivityViewModel extends AndroidViewModel {
 
         this.produto.setValue(produto);
     }
+
+//    public Produto buscarPorId(long id) {
+//        new Thread(() -> {
+//            encontrado = produtoDao.getById(id);
+//
+//        }).start();
+//
+//        return encontrado;
+//    }
 
     public void atualizaProdutoBanco(Produto produto) {
         new Thread(() -> {

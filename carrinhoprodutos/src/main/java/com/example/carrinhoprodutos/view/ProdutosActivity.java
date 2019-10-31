@@ -2,43 +2,42 @@ package com.example.carrinhoprodutos.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.example.carrinhoprodutos.R;
-import com.example.carrinhoprodutos.model.Produto;
-import com.example.carrinhoprodutos.repository.data.ProdutoDao;
-import com.example.carrinhoprodutos.view.adapter.ProdutosAdapter;
-import com.example.carrinhoprodutos.view.interfaces.ItemsToCart;
-import com.example.carrinhoprodutos.view.interfaces.OnItemClickListener;
-import com.example.carrinhoprodutos.viewmodel.ProdutosActivityViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
-import android.view.ActionMode;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.example.carrinhoprodutos.R;
+import com.example.carrinhoprodutos.model.Carrinho;
+import com.example.carrinhoprodutos.model.Produto;
+import com.example.carrinhoprodutos.view.adapter.ProdutosAdapter;
+import com.example.carrinhoprodutos.view.interfaces.DeleteItem;
+import com.example.carrinhoprodutos.view.interfaces.ItemsToCart;
+import com.example.carrinhoprodutos.view.interfaces.OnItemClickListener;
+import com.example.carrinhoprodutos.viewmodel.ProdutosActivityViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProdutosActivity extends AppCompatActivity implements ActionMode.Callback, ItemsToCart, OnItemClickListener {
+public class ProdutosActivity extends AppCompatActivity implements ItemsToCart, OnItemClickListener, DeleteItem {
     private RecyclerView recyclerView;
     private ProdutosAdapter adapter;
     private List<Produto> listaProduto = new ArrayList<>();
-    private ActionMode actionMode;
+    private List<Produto> produtosCarrinho = new ArrayList<>();
 
     private ProdutosActivityViewModel viewModel;
 
     public static final String CARRINHO = "carrinho";
-    public static final String PRODUTO = "produtoid";
+    public static final String PRODUTO = "produto";
+    public static final String PROD_ID = "produtoid";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +47,9 @@ public class ProdutosActivity extends AppCompatActivity implements ActionMode.Ca
         setSupportActionBar(toolbar);
 
         initViews();
+        setTitle("Produtos");
 
-        adapter = new ProdutosAdapter(listaProduto, this);
+        adapter = new ProdutosAdapter(listaProduto, this, this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -71,90 +71,31 @@ public class ProdutosActivity extends AppCompatActivity implements ActionMode.Ca
         viewModel = ViewModelProviders.of(this).get(ProdutosActivityViewModel.class);
     }
 
-    private void myToggleSelection(int idx) {
-        adapter.toggleSelection(idx);
-        String title = getString(
-                adapter.getSelectedItemCount(),
-                "%d selecionados");
-        actionMode.setTitle(title);
-    }
-
-    public void onSelect(MotionEvent event) {
-        View view = recyclerView.findChildViewUnder(event.getX(), event.getY());
-
-        if (actionMode != null) {
-            return;
-        }
-
-        actionMode = startActionMode(ProdutosActivity.this);
-        int idx = recyclerView.getChildAdapterPosition(view);
-        myToggleSelection(idx);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_products, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.menu_add_cart) {
-//            return true;
-//        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-        return false;
-    }
-
-    @Override
-    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-        return false;
-    }
-
-    @Override
-    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.menu_add_cart:
-                List<Integer> selectedItemPositions =
-                        adapter.getSelectedItems();
-                for (int i = selectedItemPositions.size() - 1;
-                     i >= 0;
-                     i--) {
-                    adapter.sendToCart(selectedItemPositions.get(i));
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_carrinho:
+                if (produtosCarrinho.size() != 0) {
+                    Carrinho carrinho = new Carrinho(produtosCarrinho);
+                    Intent intent = new Intent(ProdutosActivity.this, CarrinhoActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(CARRINHO, carrinho);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                } else {
+                    Snackbar.make(recyclerView, "Adicione primeiro um item `a lista", Snackbar.LENGTH_SHORT).show();
                 }
-                actionMode.finish();
-                return true;
-            default:
+
                 return false;
         }
-    }
 
-    @Override
-    public void onDestroyActionMode(ActionMode actionMode) {
-        this.actionMode = null;
-        adapter.clearSelections();
-    }
-
-    @Override
-    public void itemsToCart(List<Produto> listaProdutos) {
-//        Intent intent = new Intent(ProdutosActivity.this, CarrinhoActivity.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putParcelableArrayList(CARRINHO, (ArrayList<? extends Parcelable>) listaProdutos);
-//        intent.putExtras(bundle);
-//        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -162,8 +103,21 @@ public class ProdutosActivity extends AppCompatActivity implements ActionMode.Ca
     public void onItemClick(Produto produto) {
         Intent intent = new Intent(ProdutosActivity.this, NovoProdutoActivity.class);
         Bundle bundle = new Bundle();
+        //bundle.putLong(PROD_ID, produto.getId());
         bundle.putParcelable(PRODUTO, produto);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void addItemToCart(Produto produto) {
+        produtosCarrinho.add(produto);
+        Toast.makeText(this, "Item adicionado ao carrinho", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void removeItemFromDB(Produto produto) {
+        viewModel.deleteItem(produto);
+        viewModel.listarProdutos();
     }
 }
