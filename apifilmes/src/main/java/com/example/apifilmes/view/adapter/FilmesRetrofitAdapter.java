@@ -11,15 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apifilmes.R;
 import com.example.apifilmes.model.Filme;
+import com.example.apifilmes.view.interfaces.MovieOnClick;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class FilmesRetrofitAdapter extends RecyclerView.Adapter<FilmesRetrofitAdapter.ViewHolder> {
     private List<Filme> filmeList;
+    private MovieOnClick listener;
 
-    public FilmesRetrofitAdapter(List<Filme> filmeList) {
+    public FilmesRetrofitAdapter(List<Filme> filmeList, MovieOnClick listener) {
         this.filmeList = filmeList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -33,6 +36,10 @@ public class FilmesRetrofitAdapter extends RecyclerView.Adapter<FilmesRetrofitAd
     public void onBindViewHolder(@NonNull FilmesRetrofitAdapter.ViewHolder holder, int position) {
         Filme filme = filmeList.get(position);
         holder.onBind(filme);
+
+        holder.itemView.setOnClickListener(view -> {
+            listener.onClick(filme);
+        });
     }
 
     @Override
@@ -65,6 +72,7 @@ public class FilmesRetrofitAdapter extends RecyclerView.Adapter<FilmesRetrofitAd
             Picasso.get().load("https://image.tmdb.org/t/p/w500/" + filme.getPosterPath()).into(imagemFilme);
 
             tituloFilme.setText(filme.getTitle());
+
 
         }
     }
