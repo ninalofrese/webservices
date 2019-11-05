@@ -1,6 +1,7 @@
 package com.example.carrinhoprodutos.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import com.example.carrinhoprodutos.model.Carrinho;
 import com.example.carrinhoprodutos.model.Produto;
 import com.example.carrinhoprodutos.view.adapter.CarrinhoAdapter;
 import com.example.carrinhoprodutos.view.interfaces.RemoveFromCart;
+import com.example.carrinhoprodutos.viewmodel.CarrinhoActivityViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class CarrinhoActivity extends AppCompatActivity implements RemoveFromCar
     private RecyclerView recyclerCarrinho;
     private TextView totalCarrinho;
     private CarrinhoAdapter adapter;
+    private CarrinhoActivityViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +53,14 @@ public class CarrinhoActivity extends AppCompatActivity implements RemoveFromCar
         recyclerCarrinho.setAdapter(adapter);
         recyclerCarrinho.setLayoutManager(new LinearLayoutManager(this));
 
-        calcularTotal(carroProdutos);
+        totalCarrinho.setText(String.format(Locale.GERMAN, "R$ %.2f", viewModel.calcularTotal(carroProdutos)));
 
     }
 
     public void initViews() {
         recyclerCarrinho = findViewById(R.id.recycler_carrinho);
         totalCarrinho = findViewById(R.id.display_total_value);
+        viewModel = ViewModelProviders.of(this).get(CarrinhoActivityViewModel.class);
     }
 
     @Override
@@ -69,16 +73,6 @@ public class CarrinhoActivity extends AppCompatActivity implements RemoveFromCar
     public void clickRemoveCart(Produto produto) {
         carroProdutos.remove(produto);
         adapter.atualizaLista(carroProdutos);
-        calcularTotal(carroProdutos);
-    }
-
-    public void calcularTotal(List<Produto> produtos) {
-        Double soma = 0.0;
-
-        for (Produto produto : produtos) {
-            soma += produto.getPreco();
-        }
-
-        totalCarrinho.setText(String.format(Locale.GERMAN, "R$ %.2f", soma));
+        totalCarrinho.setText(String.format(Locale.GERMAN, "R$ %.2f", viewModel.calcularTotal(carroProdutos)));
     }
 }
