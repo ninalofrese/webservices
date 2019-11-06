@@ -49,8 +49,16 @@ public class FilmesRetrofitAdapter extends RecyclerView.Adapter<FilmesRetrofitAd
     }
 
     public void atualizaLista(List<Filme> novaLista) {
-        this.filmeList.clear();
-        this.filmeList = novaLista;
+//        this.filmeList.clear();
+//        this.filmeList = novaLista;
+//        notifyDataSetChanged();
+        //se a lista for vazia, popular com a novaLista
+        if (this.filmeList.isEmpty()) {
+            this.filmeList = novaLista;
+        } else {
+            //se não for vazia, adicionar ao final da lista a novaLista
+            this.filmeList.addAll(novaLista);
+        }
         notifyDataSetChanged();
     }
 

@@ -9,5 +9,6 @@ import retrofit2.http.Query;
 public interface FilmeAPI {
     @GET("movie/now_playing")
     Observable<FilmeResult> getAllFilmes(@Query("api_key") String apiKey,
-                                         @Query("language") String idioma);
+                                         @Query("language") String idioma,
+                                         @Query("page") int pagina);
 }

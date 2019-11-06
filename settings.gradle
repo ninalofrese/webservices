@@ -1,2 +1,2 @@
-include ':app', ':padraoarquiteturavalormvvm', ':json', ':carrinhoprodutos', ':apifilmes', ':jsonlocalfilmes'
+include ':app', ':padraoarquiteturavalormvvm', ':json', ':carrinhoprodutos', ':apifilmes', ':jsonlocalfilmes', ':albumsapi'
 rootProject.name='webservices'

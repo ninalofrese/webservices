@@ -10,7 +10,7 @@ public class FilmeRepository {
     //Conversa com os dados
 
     //retorna a instância da interface com o retrofit e o método que traz os filmes (da interface)
-    public Observable<FilmeResult> getFilmes(String apiKey, String idioma) {
-        return getApiService().getAllFilmes(apiKey, idioma);
+    public Observable<FilmeResult> getFilmes(String apiKey, String idioma, int pagina) {
+        return getApiService().getAllFilmes(apiKey, idioma, pagina);
     }
 }
