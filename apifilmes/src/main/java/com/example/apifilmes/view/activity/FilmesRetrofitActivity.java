@@ -29,8 +29,8 @@ public class FilmesRetrofitActivity extends AppCompatActivity implements MovieOn
     private FilmeViewModel viewModel;
     private int pagina = 1;
 
-    private static final String API_KEY = "bde8033d3274c91b292a5293c6349052";
-    private static final String LANGUAGE = "pt-BR";
+    public static final String API_KEY = "bde8033d3274c91b292a5293c6349052";
+    public static final String LANGUAGE = "pt-BR";
 
 
     @Override

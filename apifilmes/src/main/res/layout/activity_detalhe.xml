@@ -6,12 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.DetalheActivity">
 
-    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-        android:id="@+id/movie_trailer"
+    <ImageView
+        android:id="@+id/movie_backdrop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:background="#CCCCCC"
-        app:showFullScreenButton="false" />
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:background="#CCCCCC"
+        />
 
     <ImageView
         android:id="@+id/movie_poster"
@@ -21,7 +23,7 @@
         tools:src="@drawable/joker"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="-60dp"
-        android:layout_below="@id/movie_trailer" />
+        android:layout_below="@id/movie_backdrop" />
 
     <TextView
         android:id="@+id/movie_title"
@@ -31,7 +33,7 @@
         tools:text="Titulo do Filme"
         android:textStyle="bold"
         android:layout_toRightOf="@id/movie_poster"
-        android:layout_below="@id/movie_trailer"
+        android:layout_below="@id/movie_backdrop"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         />
@@ -59,7 +61,5 @@
         android:layout_marginRight="24dp"
         android:layout_marginTop="16dp"
         />
-
-
 
 </RelativeLayout>

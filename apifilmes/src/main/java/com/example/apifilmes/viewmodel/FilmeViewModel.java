@@ -43,10 +43,10 @@ public class FilmeViewModel extends AndroidViewModel {
                         .doOnSubscribe(disposable1 -> loading.setValue(true))
                         .doOnTerminate(() -> loading.setValue(false))
                         .subscribe(filmeResult ->
-                            listaFilme.setValue(filmeResult.getFilmes())
-                        , throwable -> {
-                            Log.wtf("LOGJ", "erro " + throwable.getMessage());
-                        })
+                                        listaFilme.setValue(filmeResult.getFilmes())
+                                , throwable -> {
+                                    Log.wtf("FILMES", "getAllFilmes " + throwable.getMessage());
+                                })
         );
     }
 
