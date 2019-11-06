@@ -41,6 +41,12 @@ public class AlbumsActivityViewModel extends AndroidViewModel {
                 repository.getAlbumArtist(busca)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe(subscription -> {
+                            loading.setValue(true);
+                        })
+                        .doOnTerminate(() -> {
+                            loading.setValue(false);
+                        })
                         .subscribe(artista1 -> {
                             listaAlbums.setValue(artista1.getAlbum());
                         }, throwable -> {

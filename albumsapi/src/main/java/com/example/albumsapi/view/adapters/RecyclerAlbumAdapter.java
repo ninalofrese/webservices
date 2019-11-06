@@ -38,7 +38,7 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerAlbumAdap
     @Override
     public int getItemCount() {
         return albumList == null ? 0 : albumList.size();
-        //return filmeList.size();
+        //return albumList.size();
     }
 
     public void atualizaLista(List<Album> novaLista) {
@@ -51,6 +51,23 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerAlbumAdap
         } else {
             //se não for vazia, adicionar ao final da lista a novaLista
             this.albumList.addAll(novaLista);
+        }
+        notifyDataSetChanged();
+    }
+
+    //Método que atualiza a lista
+    public void update(List<Album> albums) {
+        if (albumList != null) {
+            this.albumList.clear();
+        }
+        this.albumList = albums;
+        notifyDataSetChanged();
+    }
+
+    //Metodo que limpa a lista
+    public void clear() {
+        if (albumList != null) {
+            this.albumList.clear();
         }
         notifyDataSetChanged();
     }
@@ -70,7 +87,9 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerAlbumAdap
 
             //Picasso para carregar imagens
             //De acordo com a documentação
-            Picasso.get().load(album.getStrAlbumThumb()).into(imagemAlbum);
+            if (album.getStrAlbumThumb() != null && !album.getStrAlbumThumb().isEmpty()) {
+                Picasso.get().load(album.getStrAlbumThumb()).into(imagemAlbum);
+            }
 
             tituloAlbum.setText(album.getStrAlbum());
         }
