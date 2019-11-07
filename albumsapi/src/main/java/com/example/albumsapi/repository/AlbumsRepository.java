@@ -12,7 +12,4 @@ public class AlbumsRepository {
         return getApiService().getAlbumsFromArtist(banda);
     }
 
-
-
-
 }

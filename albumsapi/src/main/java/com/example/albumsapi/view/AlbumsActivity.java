@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.example.albumsapi.R;
 import com.example.albumsapi.model.Album;
@@ -41,7 +42,15 @@ public class AlbumsActivity extends AppCompatActivity {
         viewModel.getAllAlbums(itemBusca);
 
         viewModel.getListAlbums().observe(this, albums -> {
-            adapter.update(albums);
+            if(albums != null && !albums.isEmpty()){
+                adapter.update(albums);
+            } else{
+                adapter.update(this.albumList);
+            }
+        });
+
+        viewModel.getErrorAlbum().observe(this, s -> {
+            Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
         });
 
         viewModel.getLoading().observe(this, aBoolean -> {

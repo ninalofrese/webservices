@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.albumsapi.model.Album;
-import com.example.albumsapi.model.Artista;
 import com.example.albumsapi.repository.AlbumsRepository;
 
 import java.util.List;
@@ -20,6 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class AlbumsActivityViewModel extends AndroidViewModel {
     private MutableLiveData<List<Album>> listaAlbums = new MutableLiveData<>();
+    private MutableLiveData<String> albunsLiveDataError = new MutableLiveData<>();
     private CompositeDisposable disposable = new CompositeDisposable();
     private AlbumsRepository repository = new AlbumsRepository();
     private MutableLiveData<Boolean> loading = new MutableLiveData<>();
@@ -36,6 +36,10 @@ public class AlbumsActivityViewModel extends AndroidViewModel {
         return this.loading;
     }
 
+    public LiveData<String> getErrorAlbum() {
+        return this.albunsLiveDataError;
+    }
+
     public void getAllAlbums(String busca) {
         disposable.add(
                 repository.getAlbumArtist(busca)
@@ -50,7 +54,8 @@ public class AlbumsActivityViewModel extends AndroidViewModel {
                         .subscribe(artista1 -> {
                             listaAlbums.setValue(artista1.getAlbum());
                         }, throwable -> {
-                            Log.i("ARTISTA", "getAllAlbums " + throwable.getMessage());
+                            //Log.i("ARTISTA", "getAllAlbums " + throwable.getMessage());
+                            albunsLiveDataError.setValue(throwable.getMessage());
                         })
         );
     }

@@ -57,18 +57,18 @@ public class RecyclerAlbumAdapter extends RecyclerView.Adapter<RecyclerAlbumAdap
 
     //Método que atualiza a lista
     public void update(List<Album> albums) {
-        if (albumList != null) {
-            this.albumList.clear();
-        }
+//        if (albumList != null) {
+        this.albumList.clear();
+//        }
         this.albumList = albums;
         notifyDataSetChanged();
     }
 
     //Metodo que limpa a lista
     public void clear() {
-        if (albumList != null) {
-            this.albumList.clear();
-        }
+//        if (albumList != null) {
+        this.albumList.clear();
+//        }
         notifyDataSetChanged();
     }
 
