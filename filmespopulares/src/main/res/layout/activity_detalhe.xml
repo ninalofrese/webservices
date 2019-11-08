@@ -11,55 +11,69 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"
         android:background="#CCCCCC"
-        />
+        android:scaleType="fitXY" />
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:background="@null"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_detalhes"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/AppTheme.ToolBarLayout"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
 
     <ImageView
         android:id="@+id/movie_poster"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        tools:src="@drawable/joker"
+        android:layout_below="@id/movie_backdrop"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="-60dp"
-        android:layout_below="@id/movie_backdrop" />
+        android:adjustViewBounds="true"
+        tools:src="@drawable/joker" />
 
     <TextView
         android:id="@+id/movie_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        tools:text="Titulo do Filme"
-        android:textStyle="bold"
-        android:layout_toRightOf="@id/movie_poster"
         android:layout_below="@id/movie_backdrop"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        />
+        android:layout_toRightOf="@id/movie_poster"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Titulo do Filme" />
 
     <TextView
         android:id="@+id/movie_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        tools:text="00/00/00"
-        android:layout_toRightOf="@id/movie_poster"
         android:layout_below="@id/movie_title"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        />
+        android:layout_toRightOf="@id/movie_poster"
+        android:textSize="14sp"
+        tools:text="00/00/00" />
 
     <TextView
         android:id="@+id/movie_sinopse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        tools:text="Sinopse do filme"
         android:layout_below="@id/movie_poster"
         android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
         android:layout_marginTop="16dp"
-        />
+        android:layout_marginRight="24dp"
+        android:textSize="16sp"
+        tools:text="Sinopse do filme" />
 
 </RelativeLayout>

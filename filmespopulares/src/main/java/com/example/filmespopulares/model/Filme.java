@@ -4,11 +4,15 @@ package com.example.filmespopulares.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity(tableName = "filmes")
 public class Filme implements Parcelable {
 
     @Expose
@@ -18,6 +22,7 @@ public class Filme implements Parcelable {
     @SerializedName("genre_ids")
     private List<Long> genreIds;
     @Expose
+    @PrimaryKey
     private Long id;
     @SerializedName("original_language")
     private String originalLanguage;
@@ -39,6 +44,9 @@ public class Filme implements Parcelable {
     private Double voteAverage;
     @SerializedName("vote_count")
     private Long voteCount;
+
+    public Filme() {
+    }
 
     protected Filme(Parcel in) {
         byte tmpAdult = in.readByte();
