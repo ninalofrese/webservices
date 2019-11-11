@@ -4,9 +4,11 @@ package com.example.filmespopulares.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -52,8 +54,9 @@ public class PopularesFragment extends Fragment implements FilmeOnClick {
         View view = inflater.inflate(R.layout.fragment_populares, container, false);
 
         initViews(view);
+        setPaginationOnScroll();
 
-        viewModel.getAllFilmesPopulares(API_KEY, LANGUAGE, pagina);
+        viewModel.getLista(API_KEY, LANGUAGE, pagina);
 
         viewModel.getFilmesPopulares().observe(this, filmes -> {
             adapter.atualizaPopulares(filmes);
@@ -75,7 +78,7 @@ public class PopularesFragment extends Fragment implements FilmeOnClick {
         progressPopulares = view.findViewById(R.id.progress_bar_populares);
         viewModel = ViewModelProviders.of(this).get(PopularesViewModel.class);
         adapter = new RecyclerPopularesAdapter(listaPopulares, this);
-        recyclerPopulares.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerPopulares.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
         recyclerPopulares.setAdapter(adapter);
     }
 
@@ -86,5 +89,31 @@ public class PopularesFragment extends Fragment implements FilmeOnClick {
         bundle.putParcelable(FILME, filme);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    private void setPaginationOnScroll() {
+        recyclerPopulares.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                GridLayoutManager layoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+
+                //número de itens visíveis na tela (com margem para 1 acima e 1 abaixo, por conta do recycler)
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisible = layoutManager.findLastVisibleItemPosition();
+                boolean ultimoItem = lastVisible + 5 >= totalItemCount;
+
+                if (totalItemCount > 0 && ultimoItem) {
+                    pagina++;
+                    viewModel.getLista(API_KEY, LANGUAGE, pagina);
+                }
+            }
+        });
     }
 }

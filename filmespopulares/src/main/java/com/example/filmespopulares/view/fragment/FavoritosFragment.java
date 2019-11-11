@@ -21,6 +21,7 @@ import com.example.filmespopulares.model.Filme;
 import com.example.filmespopulares.view.activity.DetalheActivity;
 import com.example.filmespopulares.view.adapters.RecyclerFavoritosAdapter;
 import com.example.filmespopulares.view.interfaces.FilmeOnClick;
+import com.example.filmespopulares.view.interfaces.HeartOnClick;
 import com.example.filmespopulares.viewmodel.FavoritosViewModel;
 
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import static com.example.filmespopulares.view.fragment.PopularesFragment.FILME;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FavoritosFragment extends Fragment implements FilmeOnClick {
+public class FavoritosFragment extends Fragment implements FilmeOnClick, HeartOnClick {
     private RecyclerView recyclerFavoritos;
     private ProgressBar progressFavoritos;
     private RecyclerFavoritosAdapter adapter;
@@ -68,14 +69,13 @@ public class FavoritosFragment extends Fragment implements FilmeOnClick {
             }
         });
 
-
         return view;
     }
 
     public void initViews(View view) {
         recyclerFavoritos = view.findViewById(R.id.recycler_favoritos);
         progressFavoritos = view.findViewById(R.id.progress_bar_favoritos);
-        adapter = new RecyclerFavoritosAdapter(filmesFavoritos, this);
+        adapter = new RecyclerFavoritosAdapter(filmesFavoritos, this, this);
         viewModel = ViewModelProviders.of(this).get(FavoritosViewModel.class);
         recyclerFavoritos.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerFavoritos.setAdapter(adapter);
@@ -88,5 +88,10 @@ public class FavoritosFragment extends Fragment implements FilmeOnClick {
         bundle.putParcelable(FILME, filme);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void favoriteOnClick(Favorito favorito) {
+        viewModel.removerFavorito(favorito);
     }
 }

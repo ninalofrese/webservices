@@ -2,13 +2,7 @@ package com.example.filmespopulares.data.local;
 
 import androidx.room.TypeConverter;
 
-import com.google.gson.Gson;
-import com.google.gson.LongSerializationPolicy;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Converters {
@@ -30,9 +24,12 @@ public class Converters {
     @TypeConverter
     public String writingStringFromList(List<Long> list) {
         String genreIds = "";
-        for (long i : list) {
-            genreIds += "," + i;
+        if (list != null) {
+            for (Long i : list) {
+                genreIds += "," + i;
+            }
         }
+
         return genreIds;
     }
 

@@ -5,8 +5,10 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.RoomWarnings;
 
 @Entity(tableName = "favoritos")
+@SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
 public class Favorito {
 
     @PrimaryKey(autoGenerate = true)
@@ -15,7 +17,7 @@ public class Favorito {
     @ColumnInfo(name = "id_filme")
     private Long idFilme;
 
-    @Embedded(prefix = "filme_")
+    @Embedded
     private Filme filme;
 
     public Favorito() {
@@ -24,6 +26,12 @@ public class Favorito {
     @Ignore
     public Favorito(Long idFilme) {
         this.idFilme = idFilme;
+    }
+
+    @Ignore
+    public Favorito(Long idFilme, Filme filme) {
+        this.idFilme = idFilme;
+        this.filme = filme;
     }
 
     public long getIdFavorito() {

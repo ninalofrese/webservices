@@ -49,8 +49,15 @@ public class RecyclerPopularesAdapter extends RecyclerView.Adapter<RecyclerPopul
     }
 
     public void atualizaPopulares(List<Filme> populares) {
-        filmesPopulares.clear();
-        filmesPopulares = populares;
+//        filmesPopulares.clear();
+//        filmesPopulares = populares;
+//        notifyDataSetChanged();
+        if (this.filmesPopulares.isEmpty()) {
+            this.filmesPopulares = populares;
+        } else {
+            //se não for vazia, adicionar ao final da lista a novaLista
+            this.filmesPopulares.addAll(populares);
+        }
         notifyDataSetChanged();
     }
 

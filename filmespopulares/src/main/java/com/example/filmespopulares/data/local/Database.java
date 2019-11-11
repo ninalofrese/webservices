@@ -9,7 +9,7 @@ import androidx.room.TypeConverters;
 import com.example.filmespopulares.model.Favorito;
 import com.example.filmespopulares.model.Filme;
 
-@androidx.room.Database(entities = {Filme.class, Favorito.class}, version = 4, exportSchema = false)
+@androidx.room.Database(entities = {Filme.class, Favorito.class}, version = 6, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class Database extends RoomDatabase {
 

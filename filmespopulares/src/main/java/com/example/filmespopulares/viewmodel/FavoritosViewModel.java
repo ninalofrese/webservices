@@ -1,6 +1,7 @@
 package com.example.filmespopulares.viewmodel;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -8,10 +9,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.filmespopulares.model.Favorito;
+import com.example.filmespopulares.model.Filme;
 import com.example.filmespopulares.repository.FilmesRepository;
 
 import java.util.List;
 
+import io.reactivex.BackpressureOverflowStrategy;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -43,6 +46,8 @@ public class FavoritosViewModel extends AndroidViewModel {
     public void getAllFavoritos() {
         disposable.add(
                 repository.getFavoritos(getApplication().getApplicationContext())
+                        .onBackpressureBuffer(100, () -> {
+                        }, BackpressureOverflowStrategy.DROP_OLDEST)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnSubscribe(subscription -> {
@@ -50,13 +55,23 @@ public class FavoritosViewModel extends AndroidViewModel {
                         })
                         .doOnTerminate(() -> {
                             loading.setValue(false);
+//                            Log.i("CICLO", "TERMINATE carregado");
                         })
                         .subscribe(favoritos -> {
                             listaFilmes.setValue(favoritos);
+                            //tira o loading ao carregar os itens
+                            loading.setValue(false);
                         }, throwable -> {
                             erro.setValue(throwable.getMessage());
                         })
         );
+    }
+
+    public void removerFavorito(Favorito favorito) {
+        //Favorito novoFavorito = new Favorito(filme.getId(), filme);
+        new Thread(() -> {
+            repository.deletarFavorito(getApplication().getApplicationContext(), favorito);
+        }).start();
     }
 
     @Override

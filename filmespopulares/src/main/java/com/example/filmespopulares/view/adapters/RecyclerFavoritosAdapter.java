@@ -13,6 +13,7 @@ import com.example.filmespopulares.R;
 import com.example.filmespopulares.model.Favorito;
 import com.example.filmespopulares.model.Filme;
 import com.example.filmespopulares.view.interfaces.FilmeOnClick;
+import com.example.filmespopulares.view.interfaces.HeartOnClick;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,10 +21,12 @@ import java.util.List;
 public class RecyclerFavoritosAdapter extends RecyclerView.Adapter<RecyclerFavoritosAdapter.ViewHolder> {
     private List<Favorito> filmesFavoritos;
     private FilmeOnClick listener;
+    private HeartOnClick favListener;
 
-    public RecyclerFavoritosAdapter(List<Favorito> filmesFavoritos, FilmeOnClick listener) {
+    public RecyclerFavoritosAdapter(List<Favorito> filmesFavoritos, FilmeOnClick listener, HeartOnClick favListener) {
         this.filmesFavoritos = filmesFavoritos;
         this.listener = listener;
+        this.favListener = favListener;
     }
 
     @NonNull
@@ -42,6 +45,10 @@ public class RecyclerFavoritosAdapter extends RecyclerView.Adapter<RecyclerFavor
         holder.itemView.setOnClickListener(view -> {
             listener.onClick(favorito.getFilme());
         });
+
+        holder.favoritoHeart.setOnClickListener(view -> {
+            favListener.favoriteOnClick(favorito);
+        });
     }
 
     @Override
@@ -58,12 +65,14 @@ public class RecyclerFavoritosAdapter extends RecyclerView.Adapter<RecyclerFavor
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView favoritoPoster;
         private TextView favoritoTitle;
+        private ImageView favoritoHeart;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             favoritoPoster = itemView.findViewById(R.id.item_favorito_poster);
             favoritoTitle = itemView.findViewById(R.id.item_favorito_title);
+            favoritoHeart = itemView.findViewById(R.id.item_favorito_heart);
         }
 
         public void onBind(Filme filme) {

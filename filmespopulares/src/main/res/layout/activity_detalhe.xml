@@ -1,79 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.activity.DetalheActivity">
 
-    <ImageView
-        android:id="@+id/movie_backdrop"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:background="#CCCCCC"
-        android:scaleType="fitXY" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:elevation="0dp"
-        android:background="@null"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_detalhes"
+        <ImageView
+            android:id="@+id/movie_backdrop"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:theme="@style/AppTheme.ToolBarLayout"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="#CCCCCC"
+            android:scaleType="fitXY" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:elevation="0dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_detalhes"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/AppTheme.ToolBarLayout"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
 
+        <ImageView
+            android:id="@+id/movie_poster"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_backdrop"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="-60dp"
+            android:adjustViewBounds="true"
+            tools:src="@drawable/joker" />
 
-    <ImageView
-        android:id="@+id/movie_poster"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/movie_backdrop"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="-60dp"
-        android:adjustViewBounds="true"
-        tools:src="@drawable/joker" />
+        <TextView
+            android:id="@+id/movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_backdrop"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_toRightOf="@id/movie_poster"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Titulo do Filme" />
 
-    <TextView
-        android:id="@+id/movie_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/movie_backdrop"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_toRightOf="@id/movie_poster"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        tools:text="Titulo do Filme" />
+        <TextView
+            android:id="@+id/movie_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_title"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/movie_poster"
+            android:textSize="14sp"
+            tools:text="00/00/00" />
 
-    <TextView
-        android:id="@+id/movie_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/movie_title"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_toRightOf="@id/movie_poster"
-        android:textSize="14sp"
-        tools:text="00/00/00" />
+        <TextView
+            android:id="@+id/movie_sinopse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_poster"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="24dp"
+            android:textSize="16sp"
+            tools:text="Sinopse do filme" />
 
-    <TextView
-        android:id="@+id/movie_sinopse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/movie_poster"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="24dp"
-        android:textSize="16sp"
-        tools:text="Sinopse do filme" />
+        <TextView
+            android:id="@+id/movie_videos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/movie_sinopse"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="24dp"
+            android:text="Vídeos"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_videos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/movie_videos"
+            android:layout_alignParentStart="true"
+            android:padding="8dp"
+            tools:listitem="@layout/item_video" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/recycler_videos"
+            android:indeterminate="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</ScrollView>
