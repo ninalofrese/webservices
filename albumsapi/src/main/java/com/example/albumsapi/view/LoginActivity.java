@@ -46,6 +46,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        GoogleSignInAccount alreadyLoggedAccount = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (alreadyLoggedAccount != null) {
+            Toast.makeText(this, "Você já está logado", Toast.LENGTH_SHORT).show();
+            concluirLogin(alreadyLoggedAccount);
+        } else {
+            Toast.makeText(this, "Entre em alguma conta", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
