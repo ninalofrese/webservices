@@ -72,6 +72,7 @@ public class AlbumsActivity extends AppCompatActivity {
                 Intent intent = new Intent(AlbumsActivity.this, LoginActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             });
         });
 
