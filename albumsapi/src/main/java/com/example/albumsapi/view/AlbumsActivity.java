@@ -7,19 +7,31 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.albumsapi.R;
 import com.example.albumsapi.model.Album;
 import com.example.albumsapi.view.adapters.RecyclerAlbumAdapter;
 import com.example.albumsapi.viewmodel.AlbumsActivityViewModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.signin.SignInOptions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.albumsapi.view.LoginActivity.GOOGLE_ACCOUNT;
 
 public class AlbumsActivity extends AppCompatActivity {
     private RecyclerView recyclerAlbum;
@@ -32,19 +44,43 @@ public class AlbumsActivity extends AppCompatActivity {
     private String itemBusca = "Iron Maiden";
     private int pagina = 1;
 
+    private ImageView profileImage;
+    private TextView profileNome;
+    private TextView profileEmail;
+    private Button profileButton;
+    private GoogleSignInClient googleSignInClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_albums);
 
         initViews();
+        setScrollView();
+
+        GoogleSignInOptions gso = new GoogleSignInOptions
+                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        pegaOsDados();
+
+        profileButton.setOnClickListener(view -> {
+            googleSignInClient.signOut().addOnCompleteListener(task -> {
+                Intent intent = new Intent(AlbumsActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            });
+        });
 
         viewModel.getAllAlbums(itemBusca);
 
         viewModel.getListAlbums().observe(this, albums -> {
-            if(albums != null && !albums.isEmpty()){
+            if (albums != null && !albums.isEmpty()) {
                 adapter.update(albums);
-            } else{
+            } else {
                 adapter.update(this.albumList);
             }
         });
@@ -94,6 +130,17 @@ public class AlbumsActivity extends AppCompatActivity {
         adapter = new RecyclerAlbumAdapter(albumList);
         recyclerAlbum.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerAlbum.setAdapter(adapter);
+        profileImage = findViewById(R.id.profile_image);
+        profileNome = findViewById(R.id.profile_name);
+        profileEmail = findViewById(R.id.profile_email);
+        profileButton = findViewById(R.id.profile_logout);
+    }
+
+    private void pegaOsDados() {
+        GoogleSignInAccount googleSignInAccount = getIntent().getParcelableExtra(GOOGLE_ACCOUNT);
+        Picasso.get().load(googleSignInAccount.getPhotoUrl()).centerInside().fit().into(profileImage);
+        profileNome.setText(googleSignInAccount.getDisplayName());
+        profileEmail.setText(googleSignInAccount.getEmail());
     }
 
     private void setScrollView() {
