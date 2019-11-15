@@ -1,2 +1,2 @@
-include ':app', ':padraoarquiteturavalormvvm', ':json', ':carrinhoprodutos', ':apifilmes', ':jsonlocalfilmes', ':albumsapi', ':randomuser', ':filmespopulares'
+include ':app', ':padraoarquiteturavalormvvm', ':json', ':carrinhoprodutos', ':apifilmes', ':jsonlocalfilmes', ':albumsapi', ':randomuser', ':filmespopulares', ':firebase'
 rootProject.name='webservices'
