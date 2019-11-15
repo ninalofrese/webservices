@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -180,9 +181,11 @@ public class DetalheActivity extends AppCompatActivity implements FullScreenList
         fullScreenHelper.enterFullScreen();
 
         ViewGroup.LayoutParams view = playerView.getLayoutParams();
-        view.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        view.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        view.height = RelativeLayout.LayoutParams.MATCH_PARENT;
+        view.width = RelativeLayout.LayoutParams.MATCH_PARENT;
         playerView.setLayoutParams(view);
+
+//        recyclerVideos.setHasFixedSize(false);
 
     }
 
@@ -198,6 +201,8 @@ public class DetalheActivity extends AppCompatActivity implements FullScreenList
         view.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         view.width = 250;
         playerView.setLayoutParams(view);
+
+//        recyclerVideos.setHasFixedSize(true);
     }
 
     public void adicionaViewsLista() {

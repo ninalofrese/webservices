@@ -1,6 +1,7 @@
 package com.example.filmespopulares.view.adapters;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -43,8 +44,6 @@ public class RecyclerVideosAdapter extends RecyclerView.Adapter<RecyclerVideosAd
         //Video video = videosFilme.get(position);
 
         //holder.onBind(video);
-
-        //TODO: Deixar o vídeo fullscreen
     }
 
     @Override
@@ -71,7 +70,7 @@ public class RecyclerVideosAdapter extends RecyclerView.Adapter<RecyclerVideosAd
         public ViewHolder(YouTubePlayerView playerView) {
             super(playerView);
 
-            youTubePlayerView = playerView;
+            youTubePlayerView = playerView.findViewById(R.id.trailer_video);
 
             youTubePlayerView.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
                 @Override
