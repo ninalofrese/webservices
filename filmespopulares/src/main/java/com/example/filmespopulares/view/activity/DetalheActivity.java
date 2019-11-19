@@ -170,7 +170,6 @@ public class DetalheActivity extends AppCompatActivity implements FullScreenList
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void enterFullScreen(YouTubePlayerView playerView) {
 
