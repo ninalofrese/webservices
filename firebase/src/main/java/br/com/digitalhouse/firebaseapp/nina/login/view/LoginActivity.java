@@ -9,6 +9,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
@@ -16,6 +20,8 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Arrays;
 
 import br.com.digitalhouse.firebaseapp.R;
 import br.com.digitalhouse.firebaseapp.nina.home.view.HomeActivity;
@@ -39,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
         initViews();
 
-        //TODO: Inicializar callback facebook
+        callbackManager = CallbackManager.Factory.create();
 
         //Vai para tela de registro de usuário
         textViewGotoRegister.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
@@ -92,7 +98,23 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void loginFacebook() {
-        // TODO: Login facebook
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                irParaHome(loginResult.getAccessToken().getUserId());
+            }
+
+            @Override
+            public void onCancel() {
+                Snackbar.make(btnLogin, "Cancelado", Snackbar.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Snackbar.make(btnLogin, error.getMessage(), Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void irParaHome(String uiid) {

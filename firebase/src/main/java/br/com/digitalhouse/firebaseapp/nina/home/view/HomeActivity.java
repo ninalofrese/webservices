@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.facebook.login.LoginManager;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import br.com.digitalhouse.firebaseapp.nina.favorites.view.FavoritesActivity;
 import br.com.digitalhouse.firebaseapp.nina.home.viewmodel.HomeViewModel;
 import br.com.digitalhouse.firebaseapp.nina.interfaces.FavoriteItemClick;
 import br.com.digitalhouse.firebaseapp.nina.interfaces.RecyclerViewClick;
+import br.com.digitalhouse.firebaseapp.nina.login2.Login2Activity;
 import br.com.digitalhouse.firebaseapp.nina.model.Result;
 
 public class HomeActivity extends AppCompatActivity implements RecyclerViewClick, FavoriteItemClick {
@@ -80,8 +83,13 @@ public class HomeActivity extends AppCompatActivity implements RecyclerViewClick
     }
 
     @Override
-    public void removeFavoriteClickListener(Result result) {
+    public void addFavoriteClickListener(Result result) {
         viewModel.salvarFavorito(result);
+    }
+
+    @Override
+    public void removeFavoriteClickListener(Result result) {
+
     }
 
     @Override
@@ -109,6 +117,12 @@ public class HomeActivity extends AppCompatActivity implements RecyclerViewClick
     }
 
     private void logout() {
-        // TODO: fazer logout
+        AuthUI.getInstance().signOut(this)
+                .addOnCompleteListener(task -> {
+                    startActivity(new Intent(this, Login2Activity.class));
+                    finish();
+                });
+
+        LoginManager.getInstance().logOut();
     }
 }

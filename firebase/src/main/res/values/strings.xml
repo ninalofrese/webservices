@@ -3,8 +3,7 @@
     <string name="action_logout">Sair</string>
     <string name="action_favoritos">Favoritos</string>
     <string name="action_perfil">Perfil</string>
-    <string name="facebook_application_id" translatable="false">423427445217409</string>
-    <string name="facebook_app_id">423427445217409</string>
-    <string name="fb_login_protocol_scheme">fb423427445217409</string>
-
+    <string name="facebook_application_id" translatable="false">417502218883757</string>
+    <string name="facebook_app_id">417502218883757</string>
+    <string name="fb_login_protocol_scheme">fb417502218883757</string>
 </resources>
