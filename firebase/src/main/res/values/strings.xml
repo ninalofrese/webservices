@@ -6,4 +6,5 @@
     <string name="facebook_application_id" translatable="false">417502218883757</string>
     <string name="facebook_app_id">417502218883757</string>
     <string name="fb_login_protocol_scheme">fb417502218883757</string>
+    <string name="action_profile">Profile</string>
 </resources>

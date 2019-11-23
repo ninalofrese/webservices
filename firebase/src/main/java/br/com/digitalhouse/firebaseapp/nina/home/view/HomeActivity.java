@@ -28,6 +28,7 @@ import br.com.digitalhouse.firebaseapp.nina.interfaces.FavoriteItemClick;
 import br.com.digitalhouse.firebaseapp.nina.interfaces.RecyclerViewClick;
 import br.com.digitalhouse.firebaseapp.nina.login2.Login2Activity;
 import br.com.digitalhouse.firebaseapp.nina.model.Result;
+import br.com.digitalhouse.firebaseapp.nina.profile.ProfileActivity;
 
 public class HomeActivity extends AppCompatActivity implements RecyclerViewClick, FavoriteItemClick {
 
@@ -102,6 +103,12 @@ public class HomeActivity extends AppCompatActivity implements RecyclerViewClick
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+
+        if (id == R.id.action_profile) {
+            startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+            return true;
+        }
 
         if (id == R.id.action_favoritos) {
             startActivity(new Intent(HomeActivity.this, FavoritesActivity.class));
