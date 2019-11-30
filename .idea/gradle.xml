@@ -14,10 +14,13 @@
             <option value="$PROJECT_DIR$/carrinhoprodutos" />
             <option value="$PROJECT_DIR$/filmespopulares" />
             <option value="$PROJECT_DIR$/firebase" />
+            <option value="$PROJECT_DIR$/googlemaps" />
             <option value="$PROJECT_DIR$/json" />
             <option value="$PROJECT_DIR$/jsonlocalfilmes" />
+            <option value="$PROJECT_DIR$/mediaescolar" />
             <option value="$PROJECT_DIR$/padraoarquiteturavalormvvm" />
             <option value="$PROJECT_DIR$/randomuser" />
+            <option value="$PROJECT_DIR$/testemedia" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

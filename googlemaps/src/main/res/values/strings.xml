@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GoogleMaps</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="mapa_normal">Mapa Normal</string>
+    <string name="mapa_hibrido">Mapa Híbrido</string>
+    <string name="mapa_satelite">Mapa Satélite</string>
+    <string name="mapa_do_terreno">Mapa do Terreno</string>
+    <string name="localizacao">Localização</string>
+</resources>
